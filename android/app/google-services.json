@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "215909774861",
+    "project_id": "facechat-486a3",
+    "storage_bucket": "facechat-486a3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:215909774861:android:6536c6aad503e3ac280744",
+        "android_client_info": {
+          "package_name": "com.junghun.facechat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "215909774861-elai9516qvb1k1r9htskkslde1l4tils.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbXuPiAvvtZr2_jpaNptPBkXGP1zJGcUE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "215909774861-elai9516qvb1k1r9htskkslde1l4tils.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

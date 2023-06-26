@@ -1,0 +1,59 @@
+name: facechat
+description: This is Realtime Face Chat Application
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.2 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  # 데이터 직렬화(모델링) 라이브러리
+  json_annotation: ^4.8.1
+  # 상태관리 라이브러리
+  provider: ^6.0.5
+  # 이미지 선택 라이브러리
+  image_picker: ^0.8.9
+  # 내부 데이터 저장소 라이브러리
+  shared_preferences: ^2.1.2
+  # 네트워크 관련 라이브러리
+  http: ^0.13.0
+  # 다른 어플 요청 라이브러리
+  url_launcher: ^6.1.11
+  # 파이어베이스 관련 라이브러리
+  firebase_core: ^2.14.0
+  cloud_firestore: ^4.8.1
+  firebase_storage: ^11.2.3
+  firebase_auth: ^4.6.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+  build_runner: ^2.4.5
+  json_serializable: ^6.7.0
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/icons/
+    - assets/icons/svg/
+    - assets/icons/nav/
+    - assets/logo/
+
+  fonts:
+    - family: AppleSDGothicNeo
+      fonts:
+        - asset: assets/fonts/AppleSDGothicNeoM.ttf
+          weight: 400
+        - asset: assets/fonts/AppleSDGothicNeoB.ttf
+          weight: 700
