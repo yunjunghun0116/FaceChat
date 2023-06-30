@@ -54,14 +54,14 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kWhiteColor,
+      backgroundColor: kMainColor,
       body: Stack(
         children: [
           SlideTransition(
             position: _animation,
             child: Center(
               child: Image.asset(
-                'assets/logo/face_chat_text_logo.png',
+                'assets/logo/face_chat_white_text_logo.png',
               ),
             ),
           ),
@@ -70,7 +70,7 @@ class _SplashScreenState extends State<SplashScreen>
             child: Container(
               width: MediaQuery.of(context).size.width,
               height: 200,
-              color: kWhiteColor,
+              color: kMainColor,
             ),
           ),
         ],

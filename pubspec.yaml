@@ -25,11 +25,19 @@ dependencies:
   http: ^0.13.0
   # 다른 어플 요청 라이브러리
   url_launcher: ^6.1.11
+  # 안내 및 상태메시지 라이브러리
+  another_flushbar: ^1.12.30
   # 파이어베이스 관련 라이브러리
   firebase_core: ^2.14.0
   cloud_firestore: ^4.8.1
   firebase_storage: ^11.2.3
   firebase_auth: ^4.6.3
+  # 카카오 로그인 관련 라이브러리
+  kakao_flutter_sdk_user: ^1.4.3
+  # 네이버 로그인 관련 라이브러리
+  flutter_naver_login: ^1.8.0
+  # 애플 로그인 관련 라이브러리
+  sign_in_with_apple: ^5.0.0
 
 dev_dependencies:
   flutter_test:
@@ -48,6 +56,7 @@ flutter:
     - assets/icons/
     - assets/icons/svg/
     - assets/icons/nav/
+    - assets/icons/social/
     - assets/logo/
 
   fonts:

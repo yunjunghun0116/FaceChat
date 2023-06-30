@@ -2,10 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Facechat</string>
+	<string>FaceChat</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -20,9 +22,38 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>kakao7f56a7b5e87442ef9dc66fc1245f1313</string>
+				<string>FaceChat</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+	    <!-- 카카오 로그인 및 공유하기 -->
+		<string>kakaokompassauth</string>
+		<string>kakaolink</string>
+		<!-- 네이버 로그인 -->
+		<string>naversearchapp</string>
+        <string>naversearchthirdlogin</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>이미지 업로드 및 프로필 이미지 편집을 위해 이 앱에서 카메라에 접근을 하려고 합니다.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>이 앱에서 마이크에 접근을 하려고 합니다.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>이미지 업로드 및 프로필 이미지 편집을 위해 이 앱에서 갤러리에 접근을 하려고 합니다.</string>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
@@ -43,16 +74,37 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
 
-    <key>NSCameraUsageDescription</key>
-    <string>이미지 업로드 및 프로필 이미지 편집을 위해 이 앱에서 카메라에 접근을 하려고 합니다.</string>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>이 앱에서 마이크에 접근을 하려고 합니다.</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>이미지 업로드 및 프로필 이미지 편집을 위해 이 앱에서 갤러리에 접근을 하려고 합니다.</string>
+    <!-- 네이버 관련 설정 -->
+    <key>naverServiceAppUrlScheme</key>
+    <string>FaceChat</string>
+    <key>naverConsumerKey</key>
+    <string>lCxUH1EZVyuBd31ENMLT</string>
+    <key>naverConsumerSecret</key>
+    <string>JZVekDz1Eh</string>
+    <key>naverServiceAppName</key>
+    <string>FaceChat</string>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+       <key>NSAllowsArbitraryLoads</key>
+       <true/>
+       <key>NSExceptionDomains</key>
+       <dict>
+          <key>naver.com</key>
+          <dict>
+             <key>NSExceptionRequiresForwardSecrecy</key>
+             <false/>
+             <key>NSIncludesSubdomains</key>
+             <true/>
+          </dict>
+          <key>naver.net</key>
+          <dict>
+             <key>NSExceptionRequiresForwardSecrecy</key>
+             <false/>
+             <key>NSIncludesSubdomains</key>
+             <true/>
+          </dict>
+       </dict>
+    </dict>
 </dict>
 </plist>
