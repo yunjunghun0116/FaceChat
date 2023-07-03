@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:facechat/constants/constants_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import '../../utils/local_utils.dart';
@@ -33,10 +34,10 @@ class _LoginScreenState extends State<LoginScreen> {
       User user = await UserApi.instance.me();
       String? userEmail = user.kakaoAccount?.email;
       if (userEmail == null) throw Exception('이메일이 존재하지 않습니다');
-      if(!mounted) return;
-      showMessage(context,message: '${userEmail} 카카오로그인 성공~');
+      if (!mounted) return;
+      showMessage(context, message: '$userEmail 카카오로그인 성공~');
     } catch (e) {
-      log('kakaoSignIn Error : $e');
+      showMessage(context, message: 'kakaoSignIn Error : $e');
       return;
     }
   }
@@ -47,10 +48,10 @@ class _LoginScreenState extends State<LoginScreen> {
       if (result.status != NaverLoginStatus.loggedIn) {
         throw Exception('로그인을 실패했습니다');
       }
-      if(!mounted) return;
-      showMessage(context,message: '${result.account.email} 네이버로그인 성공~');
+      if (!mounted) return;
+      showMessage(context, message: '${result.account.email} 네이버로그인 성공~');
     } catch (e) {
-      log('naverSignIn Error : $e');
+      showMessage(context, message: 'naverSignIn Error : $e');
       return;
     }
   }
@@ -72,10 +73,23 @@ class _LoginScreenState extends State<LoginScreen> {
       final List<int> jsonData = base64.decode(payload);
       final userInfo = jsonDecode(utf8.decode(jsonData));
       String email = userInfo['email'];
-
-      log(email);
+      if (!mounted) return;
+      showMessage(context, message: '$email 애플로그인 성공~');
     } catch (e) {
       log('appleSignIn Error : $e');
+      return;
+    }
+  }
+
+  void googleSignIn() async {
+    try {
+      GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
+      GoogleSignInAccount? account = await googleSignIn.signIn();
+      if(account==null)throw Exception('로그인을 실패했습니다');
+      if (!mounted) return;
+      showMessage(context, message: '${account.email} 구글로그인 성공~');
+    } catch (e) {
+      showMessage(context, message: 'googleSignIn Error : $e');
       return;
     }
   }
@@ -177,7 +191,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 )
               else
                 kCustomSocialSignIn(
-                  onTap: () {},
+                  onTap: () =>googleSignIn(),
                   image: 'assets/icons/social/google.jpg',
                 ),
             ],

@@ -31,7 +31,8 @@ dependencies:
   firebase_core: ^2.14.0
   cloud_firestore: ^4.8.1
   firebase_storage: ^11.2.3
-  firebase_auth: ^4.6.3
+  # 구글 로그인 관련 라이브러리
+  google_sign_in: ^6.1.4
   # 카카오 로그인 관련 라이브러리
   kakao_flutter_sdk_user: ^1.4.3
   # 네이버 로그인 관련 라이브러리
