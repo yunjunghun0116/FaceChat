@@ -27,6 +27,8 @@ dependencies:
   url_launcher: ^6.1.11
   # 안내 및 상태메시지 라이브러리
   another_flushbar: ^1.12.30
+  # SVG 이미지
+  flutter_svg: ^2.0.7
   # 파이어베이스 관련 라이브러리
   firebase_core: ^2.14.0
   cloud_firestore: ^4.8.1

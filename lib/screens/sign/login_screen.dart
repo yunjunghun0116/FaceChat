@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:facechat/constants/constants_colors.dart';
+import 'package:facechat/screens/sign/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -85,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
       GoogleSignInAccount? account = await googleSignIn.signIn();
-      if(account==null)throw Exception('로그인을 실패했습니다');
+      if (account == null) throw Exception('로그인을 실패했습니다');
       if (!mounted) return;
       showMessage(context, message: '${account.email} 구글로그인 성공~');
     } catch (e) {
@@ -158,7 +159,14 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               kCustomTextButton(onTap: () {}, text: '비밀번호 재설정'),
-              kCustomTextButton(onTap: () {}, text: '회원가입'),
+              kCustomTextButton(
+                  onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RegisterScreen(),
+                        ),
+                      ),
+                  text: '회원가입'),
             ],
           ),
           const SizedBox(height: 30),
@@ -191,7 +199,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 )
               else
                 kCustomSocialSignIn(
-                  onTap: () =>googleSignIn(),
+                  onTap: () => googleSignIn(),
                   image: 'assets/icons/social/google.jpg',
                 ),
             ],
