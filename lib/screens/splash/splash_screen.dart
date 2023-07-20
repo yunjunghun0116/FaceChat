@@ -1,7 +1,5 @@
 import 'package:facechat/screens/sign/login_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 import '../../constants/constants_colors.dart';
 import '../main/main_screen.dart';
 

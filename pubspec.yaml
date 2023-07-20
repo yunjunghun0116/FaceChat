@@ -22,7 +22,7 @@ dependencies:
   # 내부 데이터 저장소 라이브러리
   shared_preferences: ^2.1.2
   # 네트워크 관련 라이브러리
-  http: ^0.13.0
+  http: ^1.1.0
   # 다른 어플 요청 라이브러리
   url_launcher: ^6.1.11
   # 안내 및 상태메시지 라이브러리

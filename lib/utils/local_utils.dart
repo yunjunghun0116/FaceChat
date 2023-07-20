@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:math' as math;
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import '../constants/constants_colors.dart';
@@ -22,4 +23,12 @@ void showMessage(BuildContext context, {required String message}) async {
   } catch (e) {
     log('showMessage error : $e');
   }
+}
+
+String getVerificationCode() {
+  String newVerificationCode = '';
+  for (int i = 0; i < 6; i++) {
+    newVerificationCode += math.Random().nextInt(10).toString();
+  }
+  return newVerificationCode;
 }
