@@ -2,12 +2,17 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:facechat/constants/constants_colors.dart';
+import 'package:facechat/controllers/user_controller.dart';
+import 'package:facechat/models/user/user.dart' as model;
+import 'package:facechat/screens/main/main_screen.dart';
 import 'package:facechat/screens/sign/register_screen.dart';
+import 'package:facechat/services/firebase_sign_up_information_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import '../../services/firebase_user_service.dart';
 import '../../utils/local_utils.dart';
 import '../../widgets/custom_check_box.dart';
 
@@ -25,7 +30,6 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _autoLogin = true;
 
   void kakaoSignIn() async {
-    //TODO kakao developer -> 플랫폼 -> 키해시 수정(안드로이드) - 개발시 수정해야함
     try {
       if (await isKakaoTalkInstalled()) {
         await UserApi.instance.loginWithKakaoTalk();
@@ -36,9 +40,9 @@ class _LoginScreenState extends State<LoginScreen> {
       String? userEmail = user.kakaoAccount?.email;
       if (userEmail == null) throw Exception('이메일이 존재하지 않습니다');
       if (!mounted) return;
-      showMessage(context, message: '$userEmail 카카오로그인 성공~');
+      socialSignIn(social: 'kakao', value: userEmail);
     } catch (e) {
-      showMessage(context, message: 'kakaoSignIn Error : $e');
+      log('kakaoSignIn Error : $e');
       return;
     }
   }
@@ -51,8 +55,9 @@ class _LoginScreenState extends State<LoginScreen> {
       }
       if (!mounted) return;
       showMessage(context, message: '${result.account.email} 네이버로그인 성공~');
+      socialSignIn(social: 'naver', value: result.account.email);
     } catch (e) {
-      showMessage(context, message: 'naverSignIn Error : $e');
+      log('naverSignIn Error : $e');
       return;
     }
   }
@@ -75,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
       final userInfo = jsonDecode(utf8.decode(jsonData));
       String email = userInfo['email'];
       if (!mounted) return;
-      showMessage(context, message: '$email 애플로그인 성공~');
+      socialSignIn(social: 'apple', value: email);
     } catch (e) {
       log('appleSignIn Error : $e');
       return;
@@ -88,9 +93,60 @@ class _LoginScreenState extends State<LoginScreen> {
       GoogleSignInAccount? account = await googleSignIn.signIn();
       if (account == null) throw Exception('로그인을 실패했습니다');
       if (!mounted) return;
-      showMessage(context, message: '${account.email} 구글로그인 성공~');
+      socialSignIn(social: 'google', value: account.email);
     } catch (e) {
-      showMessage(context, message: 'googleSignIn Error : $e');
+      log('googleSignIn Error : $e');
+      return;
+    }
+  }
+
+  void socialSignIn(
+      {required String social, required String value, int count = 0}) async {
+    try {
+      if (count >= 5) throw Exception('무한 반복 Exception');
+      String? userId =
+          await FirebaseSignUpInformationService.findSocialSignInInformation(
+              social: social, value: value);
+      if (userId != null) {
+        goMainScreen(userId);
+        return;
+      }
+
+      Map<String, dynamic> userSignUpInformation = {
+        'apple': '',
+        'naver': '',
+        'kakao': '',
+        'google': '',
+        'email': '',
+        'password': '',
+      };
+
+      userSignUpInformation[social] = value;
+
+      bool registerSuccess = await FirebaseUserService.register(
+        userData: getDefaultUserData(),
+        userSignUpInformation: userSignUpInformation,
+      );
+      if (!mounted) return;
+      if (!registerSuccess) return;
+      socialSignIn(social: social, value: value, count: count + 1);
+    } catch (e) {
+      log('socialSignIn Error : $e');
+      return;
+    }
+  }
+
+  Future<void> goMainScreen(String userId)async {
+    model.User? user = await FirebaseUserService.getUser(userId: userId);
+    if (!mounted) return;
+    if (user != null) {
+      UserController().setUser(user);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const MainScreen(),
+        ),
+      );
       return;
     }
   }
@@ -104,9 +160,9 @@ class _LoginScreenState extends State<LoginScreen> {
           const SizedBox(height: 200),
           Center(child: Image.asset('assets/logo/face_chat_text_logo.png')),
           const SizedBox(height: 30),
-          kCustomTextField(_emailController, '이메일'),
+          kCustomTextField(controller:_emailController, hintText: '이메일'),
           const SizedBox(height: 10),
-          kCustomTextField(_passwordController, '비밀번호'),
+          kCustomTextField(controller:_passwordController, hintText: '비밀번호',obscureText: true),
           const SizedBox(height: 16),
           GestureDetector(
             onTap: () => setState(() => _autoLogin = !_autoLogin),
@@ -136,21 +192,34 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
           const Spacer(),
-          Container(
-            width: double.infinity,
-            height: 50,
-            alignment: Alignment.center,
-            margin: const EdgeInsets.symmetric(horizontal: 20),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-              color: kMainColor,
-            ),
-            child: Text(
-              '로그인',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: kFontGray0Color,
+          GestureDetector(
+            onTap: ()async{
+              String? userId =
+                  await FirebaseSignUpInformationService.findSignUpInformation(
+                  email: _emailController.text, password: _passwordController.text);
+              if(!mounted) return;
+              if (userId == null) {
+                showMessage(context, message: '입력한 정보를 다시 한번 확인해 주세요');
+                return;
+              }
+              goMainScreen(userId);
+            },
+            child: Container(
+              width: double.infinity,
+              height: 50,
+              alignment: Alignment.center,
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                color: kMainColor,
+              ),
+              child: Text(
+                '로그인',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: kFontGray0Color,
+                ),
               ),
             ),
           ),
@@ -210,7 +279,10 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget kCustomTextField(TextEditingController controller, String hintText) {
+  Widget kCustomTextField(
+      {required TextEditingController controller,
+      required String hintText,
+      bool obscureText = false}) {
     return Container(
       width: double.infinity,
       height: 52,
@@ -223,6 +295,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       child: TextField(
         controller: controller,
+        obscureText: obscureText,
         decoration: InputDecoration(
           border: InputBorder.none,
           enabledBorder: InputBorder.none,
@@ -237,7 +310,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         style: TextStyle(
           fontSize: 15,
-          color: kFontGray400Color,
+          color: kFontGray800Color,
           height: 20 / 15,
         ),
       ),

@@ -1,6 +1,8 @@
 import 'package:facechat/screens/sign/register_email_screen.dart';
 import 'package:facechat/screens/sign/register_name_screen.dart';
 import 'package:facechat/screens/sign/register_password_screen.dart';
+import 'package:facechat/services/firebase_user_service.dart';
+import 'package:facechat/utils/local_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -43,29 +45,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
         );
       case 2:
         return RegisterNameScreen(
-          next: (String name, String image) {
+          next: (String name, String gender, String image) async {
             setState(() {
               _userName = name;
               _userProfileImage = image;
             });
             Map<String, dynamic> userData = {
               'name': _userName,
-              'email': _userEmail,
-              'password': _userPassword,
               'profileImage': _userProfileImage,
+              'gender': gender,
             };
-            print(userData);
 
             Map<String, dynamic> userSignUpInformation = {
               'apple': '',
               'naver': '',
               'kakao': '',
               'google': '',
-              'app_email': _userEmail,
-              'app_password': _userPassword,
+              'email': _userEmail,
+              'password': _userPassword,
             };
-
-            print(userSignUpInformation);
+            bool registerSuccess = await FirebaseUserService.register(
+                userData: userData,
+                userSignUpInformation: userSignUpInformation);
+            if (!mounted) return;
+            if (!registerSuccess) return;
+            Navigator.pop(context);
+            showMessage(context, message: '회원가입을 완료했습니다.');
           },
         );
       default:

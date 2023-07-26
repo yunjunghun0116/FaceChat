@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import '../constants/constants_colors.dart';
+import '../constants/constants_url.dart';
 
 void showMessage(BuildContext context, {required String message}) async {
   try {
@@ -31,4 +32,15 @@ String getVerificationCode() {
     newVerificationCode += math.Random().nextInt(10).toString();
   }
   return newVerificationCode;
+}
+
+Map<String, dynamic> getDefaultUserData() {
+  DateTime nowDate = DateTime.now();
+  Map<String, dynamic> data = {
+    'name': '새이름입력',
+    'profileImage':
+        nowDate.second % 2 == 0 ? kProfileRedImageUrl : kProfileYellowImageUrl,
+    'gender': '남',
+  };
+  return data;
 }

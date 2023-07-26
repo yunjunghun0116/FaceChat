@@ -97,7 +97,7 @@ class _RegisterEmailScreenState extends State<RegisterEmailScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 28),
+            const SizedBox(height: 10),
             if (_sendEmail)
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),

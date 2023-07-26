@@ -18,7 +18,7 @@ dependencies:
   # 상태관리 라이브러리
   provider: ^6.0.5
   # 이미지 선택 라이브러리
-  image_picker: ^0.8.9
+  image_picker: ^1.0.1
   # 내부 데이터 저장소 라이브러리
   shared_preferences: ^2.1.2
   # 네트워크 관련 라이브러리
@@ -41,6 +41,7 @@ dependencies:
   flutter_naver_login: ^1.8.0
   # 애플 로그인 관련 라이브러리
   sign_in_with_apple: ^5.0.0
+
 
 dev_dependencies:
   flutter_test:

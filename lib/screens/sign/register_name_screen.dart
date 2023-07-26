@@ -1,4 +1,7 @@
+import 'package:facechat/services/firebase_upload_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../constants/constants_colors.dart';
 import '../../constants/constants_url.dart';
@@ -13,8 +16,11 @@ class RegisterNameScreen extends StatefulWidget {
 }
 
 class _RegisterNameScreenState extends State<RegisterNameScreen> {
+  final ImagePicker _picker = ImagePicker();
+
   final TextEditingController _nameController = TextEditingController();
 
+  String _gender = '남성';
   late String _profileImage;
 
   bool get canNextPress => _nameController.text.isNotEmpty;
@@ -25,6 +31,15 @@ class _RegisterNameScreenState extends State<RegisterNameScreen> {
     _profileImage = DateTime.now().second % 2 == 0
         ? kProfileRedImageUrl
         : kProfileYellowImageUrl;
+  }
+
+  void imagePressed() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    if (image == null) return;
+    String? imageUrl =
+        await FirebaseUploadService.uploadProfileImage(image: image);
+    if (imageUrl == null) return;
+    setState(() => _profileImage = imageUrl);
   }
 
   @override
@@ -62,59 +77,128 @@ class _RegisterNameScreenState extends State<RegisterNameScreen> {
               ),
             ),
             const SizedBox(height: 36),
-            Center(
-              child: Container(
-                width: 104,
-                height: 104,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(104),
-                    color: kSubColor1,
-                    image: DecorationImage(
-                        image: NetworkImage(
-                      _profileImage,
-                    ))),
+            GestureDetector(
+              onTap: () => imagePressed(),
+              child: Center(
+                child: Stack(
+                  children: [
+                    Container(
+                      alignment: Alignment.center,
+                      width: 104,
+                      height: 104,
+                      decoration: BoxDecoration(
+                        color: kWhiteColor,
+                        borderRadius: BorderRadius.circular(55),
+                        boxShadow: [
+                          BoxShadow(
+                            color: kBlackColor.withOpacity(0.08),
+                            blurRadius: 5,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(55),
+                        child: Image.network(
+                          _profileImage,
+                          fit: BoxFit.cover,
+                          width: 104,
+                          height: 104,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      right: 0,
+                      bottom: 0,
+                      child: Container(
+                        width: 30,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          color: kWhiteColor,
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                              color: kBlackColor.withOpacity(0.08),
+                              blurRadius: 5,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: SvgPicture.asset(
+                          'assets/icons/svg/camera_20px.svg',
+                          width: 20,
+                          height: 20,
+                          fit: BoxFit.scaleDown,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 36),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                children: [
+                  const SizedBox(
+                    width: 80,
+                    child: Text('닉네임'),
+                  ),
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      alignment: Alignment.center,
+                      width: double.infinity,
+                      height: 52,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: kFontGray50Color,
+                      ),
+                      child: TextField(
+                        controller: _nameController,
+                        keyboardType: TextInputType.number,
+                        maxLength: 8,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          isDense: true,
+                          counterText: '',
+                          hintText: '8자 이내 한글 혹은 영문',
+                          hintStyle: TextStyle(
+                            fontSize: 14,
+                            color: kFontGray400Color,
+                            height: 20 / 14,
+                          ),
+                        ),
+                        onChanged: (text) => setState(() {}),
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: kFontGray800Color,
+                          height: 20 / 14,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 10),
-            Center(
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                alignment: Alignment.center,
-                width: 140,
-                height: 52,
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      color: kFontGray100Color,
-                      width: 1.5,
-                    ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                children: [
+                  const SizedBox(
+                    width: 80,
+                    child: Text('성별'),
                   ),
-                ),
-                child: TextField(
-                  controller: _nameController,
-                  keyboardType: TextInputType.number,
-                  textAlign: TextAlign.center,
-                  maxLength: 8,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    enabledBorder: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    isDense: true,
-                    counterText: '',
-                    hintText: '8자 이내 닉네임',
-                    hintStyle: TextStyle(
-                      fontSize: 14,
-                      color: kFontGray400Color,
-                      height: 20 / 14,
-                    ),
+                  Row(
+                    children: ['남성', '여성']
+                        .map((gender) => kGenderButton(gender))
+                        .toList(),
                   ),
-                  onChanged: (text) => setState(() {}),
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: kFontGray800Color,
-                    height: 20 / 14,
-                  ),
-                ),
+                ],
               ),
             ),
           ],
@@ -122,7 +206,33 @@ class _RegisterNameScreenState extends State<RegisterNameScreen> {
         bottomNavigationBar: CustomBottomBar(
           active: canNextPress,
           text: '완료',
-          onTap: () => widget.next(_nameController.text, _profileImage),
+          onTap: () => widget.next(_nameController.text, _gender,_profileImage),
+        ),
+      ),
+    );
+  }
+
+  Widget kGenderButton(String gender) {
+    return GestureDetector(
+      onTap: () => setState(() => _gender = gender),
+      child: Container(
+        alignment: Alignment.center,
+        margin: const EdgeInsets.only(right: 8),
+        width: 80,
+        height: 52,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: _gender == gender ? kSubColor1 : kFontGray50Color,
+          border: _gender == gender ? Border.all(color: kMainColor) : null,
+        ),
+        child: Text(
+          gender,
+          style: TextStyle(
+            fontSize: 14,
+            height: 20 / 14,
+            color: _gender == gender ? kSubColor3 : kFontGray400Color,
+            fontWeight: _gender == gender ? FontWeight.bold : FontWeight.normal,
+          ),
         ),
       ),
     );
