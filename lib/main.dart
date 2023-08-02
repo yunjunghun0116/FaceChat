@@ -2,8 +2,10 @@ import 'package:facechat/screens/splash/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:provider/provider.dart';
 
 import 'constants/constants_colors.dart';
+import 'controllers/user_controller.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -13,7 +15,12 @@ Future<void> main() async {
     javaScriptAppKey: 'd5f89ed414636be1a879c2187921759f',
   );
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider<UserController>(
+      create: (_) => UserController(),
+      builder: (context, child) => const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

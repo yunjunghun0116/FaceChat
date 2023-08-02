@@ -18,20 +18,24 @@ class FirebaseUserService {
       String? userId = await FirebaseDataService.getId(name: collection);
       if (userId == null) return false;
       DateTime signUpDate = DateTime.now();
-      Map<String,dynamic> user = {
-        'id':userId,
+      Map<String, dynamic> user = {
+        'id': userId,
         ...userData,
-        'signUpDate':signUpDate.toString(),
+        'signUpDate': signUpDate.toString(),
       };
 
-      Map<String,dynamic> signUpInformation = {
-        'userId':userId,
+      Map<String, dynamic> signUpInformation = {
+        'userId': userId,
         ...userSignUpInformation,
       };
 
-      await FirebaseSignUpInformationService.setSignUpInformation(userId: userId, signUpInformation: signUpInformation);
+      await FirebaseSignUpInformationService.setSignUpInformation(
+          userId: userId, signUpInformation: signUpInformation);
 
-      await FirebaseFirestore.instance.collection(collection).doc(userId).set(user);
+      await FirebaseFirestore.instance
+          .collection(collection)
+          .doc(userId)
+          .set(user);
       return true;
     } catch (e) {
       log('FirebaseUserService - register Failed : $e');
@@ -39,13 +43,26 @@ class FirebaseUserService {
     }
   }
 
-  static Future<User?> getUser({required String userId})async{
-    DocumentSnapshot user = await FirebaseFirestore.instance.collection(collection).doc(userId).get();
-    if(user.exists){
-      Map<String,dynamic> userData = user.data() as Map<String,dynamic>;
+  static Future<User?> getUser({required String userId}) async {
+    DocumentSnapshot user = await FirebaseFirestore.instance
+        .collection(collection)
+        .doc(userId)
+        .get();
+    if (user.exists) {
+      Map<String, dynamic> userData = user.data() as Map<String, dynamic>;
       return User.fromJson(userData);
     }
     return null;
   }
 
+  static Future<List<User>> getAroundUser(String userId) async {
+    QuerySnapshot snapshot = await FirebaseFirestore.instance
+        .collection(collection)
+        .where('id', isNotEqualTo: userId)
+        .get();
+    return snapshot.docs
+        .map((document) =>
+            User.fromJson(document.data() as Map<String, dynamic>))
+        .toList();
+  }
 }

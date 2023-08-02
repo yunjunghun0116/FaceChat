@@ -6,28 +6,24 @@ import '../services/firebase_user_service.dart';
 class UserController extends ChangeNotifier {
   User? user;
 
-  Future<bool> setUser(User newUser) async {
+  Future<void> setUser(User newUser) async {
     try {
       user = newUser;
       notifyListeners();
-      return true;
     } catch (e) {
       log('UserController - setUser Failed : $e');
-      return false;
     }
   }
 
-  Future<bool> refreshUser() async {
+  Future<void> refreshUser() async {
     try {
-      if (user == null) return false;
+      if (user == null) return;
       User? newUser = await FirebaseUserService.getUser(userId: user!.id);
-      if (newUser == null) return false;
+      if (newUser == null) return;
       user = newUser;
       notifyListeners();
-      return true;
     } catch (e) {
       log('UserController - refreshUser Failed : $e');
-      return false;
     }
   }
 

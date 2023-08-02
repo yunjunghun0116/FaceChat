@@ -7,6 +7,7 @@ import 'package:facechat/models/user/user.dart' as model;
 import 'package:facechat/screens/main/main_screen.dart';
 import 'package:facechat/screens/sign/register_screen.dart';
 import 'package:facechat/services/firebase_sign_up_information_service.dart';
+import 'package:facechat/services/local_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -136,18 +137,17 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  Future<void> goMainScreen(String userId)async {
+  Future<void> goMainScreen(String userId) async {
     model.User? user = await FirebaseUserService.getUser(userId: userId);
-    if (!mounted) return;
     if (user != null) {
-      UserController().setUser(user);
-      Navigator.push(
+      await UserController().setUser(user);
+      if (!mounted) return;
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => const MainScreen(),
         ),
       );
-      return;
     }
   }
 
@@ -160,9 +160,12 @@ class _LoginScreenState extends State<LoginScreen> {
           const SizedBox(height: 200),
           Center(child: Image.asset('assets/logo/face_chat_text_logo.png')),
           const SizedBox(height: 30),
-          kCustomTextField(controller:_emailController, hintText: '이메일'),
+          kCustomTextField(controller: _emailController, hintText: '이메일'),
           const SizedBox(height: 10),
-          kCustomTextField(controller:_passwordController, hintText: '비밀번호',obscureText: true),
+          kCustomTextField(
+              controller: _passwordController,
+              hintText: '비밀번호',
+              obscureText: true),
           const SizedBox(height: 16),
           GestureDetector(
             onTap: () => setState(() => _autoLogin = !_autoLogin),
@@ -193,14 +196,18 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           const Spacer(),
           GestureDetector(
-            onTap: ()async{
+            onTap: () async {
               String? userId =
                   await FirebaseSignUpInformationService.findSignUpInformation(
-                  email: _emailController.text, password: _passwordController.text);
-              if(!mounted) return;
+                      email: _emailController.text,
+                      password: _passwordController.text);
+              if (!mounted) return;
               if (userId == null) {
                 showMessage(context, message: '입력한 정보를 다시 한번 확인해 주세요');
                 return;
+              }
+              if (_autoLogin) {
+                await LocalService.saveUserId(userId);
               }
               goMainScreen(userId);
             },
