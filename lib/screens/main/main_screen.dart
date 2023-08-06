@@ -1,10 +1,7 @@
-import 'package:facechat/controllers/user_controller.dart';
-import 'package:facechat/models/user/user.dart';
-import 'package:facechat/screens/sub/around_user_screen.dart';
+import 'package:facechat/screens/chat/chat_screen.dart';
+import 'package:facechat/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
-
 import '../../constants/constants_colors.dart';
 
 class MainScreen extends StatefulWidget {
@@ -17,41 +14,25 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _currentPageIndex = 0;
 
+  Widget getScreen() {
+    switch (_currentPageIndex) {
+      case 0:
+        return const HomeScreen();
+      case 1:
+        return Container();
+      case 2:
+        return const ChatScreen();
+      case 3:
+      default:
+        return Container();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kWhiteColor,
-      appBar: AppBar(
-        backgroundColor: kWhiteColor,
-        automaticallyImplyLeading: false,
-        leadingWidth: 140,
-        elevation: 0,
-        leading: Container(
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage(
-            'assets/logo/face_chat_text_logo.png',
-          ))),
-        ),
-        actions: [
-          GestureDetector(
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const AroundUserScreen(),
-              ),
-            ),
-            behavior: HitTestBehavior.opaque,
-            child: Center(
-              child: Icon(
-                Icons.location_on,
-                color: kFontGray800Color,
-              ),
-            ),
-          ),
-          const SizedBox(width: 20),
-        ],
-      ),
+      body: getScreen(),
       bottomNavigationBar: Container(
         color: kWhiteColor,
         child: SafeArea(

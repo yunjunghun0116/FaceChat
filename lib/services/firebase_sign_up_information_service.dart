@@ -6,13 +6,15 @@ class FirebaseSignUpInformationService {
       FirebaseSignUpInformationService();
   factory FirebaseSignUpInformationService() => _instance;
 
+  static const String collection = 'signUpInformation';
+
   static Future<bool> setSignUpInformation({
     required String userId,
     required Map<String, dynamic> signUpInformation,
   }) async {
     try {
       await FirebaseFirestore.instance
-          .collection('signUpInformation')
+          .collection(collection)
           .doc(userId)
           .set(signUpInformation);
       return true;
@@ -28,7 +30,7 @@ class FirebaseSignUpInformationService {
   }) async {
     try {
       QuerySnapshot snapshot = await FirebaseFirestore.instance
-          .collection('signUpInformation')
+          .collection(collection)
           .where(social, isEqualTo: value)
           .get();
       if (snapshot.docs.isNotEmpty) {
@@ -47,7 +49,7 @@ class FirebaseSignUpInformationService {
   }) async {
     try {
       QuerySnapshot snapshot = await FirebaseFirestore.instance
-          .collection('signUpInformation')
+          .collection(collection)
           .where('email', isEqualTo: email)
           .where('password', isEqualTo: password)
           .get();

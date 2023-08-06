@@ -43,6 +43,22 @@ class FirebaseUserService {
     }
   }
 
+  static Future<String?> get({required String fieldName,required String userId})async{
+    try{
+      DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+          .collection(collection)
+          .doc(userId)
+          .get();
+      if(userSnapshot.exists){
+        return userSnapshot.get(fieldName);
+      }
+      return null;
+    }catch(e){
+      log('FirebaseUserService - get Failed : $e');
+      return null;
+    }
+  }
+
   static Future<User?> getUser({required String userId}) async {
     DocumentSnapshot user = await FirebaseFirestore.instance
         .collection(collection)
