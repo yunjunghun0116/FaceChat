@@ -6,14 +6,14 @@ import 'package:facechat/controllers/user_controller.dart';
 import 'package:facechat/models/user/user.dart' as model;
 import 'package:facechat/screens/main/main_screen.dart';
 import 'package:facechat/screens/sign/register_screen.dart';
-import 'package:facechat/services/firebase_sign_up_information_service.dart';
 import 'package:facechat/services/local_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import '../../services/firebase_user_service.dart';
+import '../../services/sign_up_information_service.dart';
+import '../../services/user_service.dart';
 import '../../utils/local_utils.dart';
 import '../../widgets/custom_check_box.dart';
 
@@ -106,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       if (count >= 5) throw Exception('무한 반복 Exception');
       String? userId =
-          await FirebaseSignUpInformationService.findSocialSignInInformation(
+          await SignUpInformationService.findSocialSignInInformation(
               social: social, value: value);
       if (userId != null) {
         goMainScreen(userId);
@@ -124,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       userSignUpInformation[social] = value;
 
-      bool registerSuccess = await FirebaseUserService.register(
+      bool registerSuccess = await UserService.register(
         userData: getDefaultUserData(),
         userSignUpInformation: userSignUpInformation,
       );
@@ -138,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> goMainScreen(String userId) async {
-    model.User? user = await FirebaseUserService.getUser(userId: userId);
+    model.User? user = await UserService.getUser(userId: userId);
     if (user != null) {
       await UserController().setUser(user);
       if (!mounted) return;
@@ -198,7 +198,7 @@ class _LoginScreenState extends State<LoginScreen> {
           GestureDetector(
             onTap: () async {
               String? userId =
-                  await FirebaseSignUpInformationService.findSignUpInformation(
+                  await SignUpInformationService.findSignUpInformation(
                       email: _emailController.text,
                       password: _passwordController.text);
               if (!mounted) return;

@@ -3,9 +3,10 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
-class FirebaseUploadService {
-  static final FirebaseUploadService _instance = FirebaseUploadService();
-  factory FirebaseUploadService() => _instance;
+class UploadService {
+  static final UploadService _instance = UploadService._internal();
+  factory UploadService() => _instance;
+  UploadService._internal();
 
   static Future<String?> uploadProfileImage({required XFile image}) async {
     try {

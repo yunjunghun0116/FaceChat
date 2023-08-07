@@ -1,10 +1,11 @@
 import 'package:facechat/constants/constants_colors.dart';
 import 'package:facechat/controllers/user_controller.dart';
 import 'package:facechat/models/user/user.dart';
-import 'package:facechat/services/firebase_chat_service.dart';
-import 'package:facechat/services/firebase_user_service.dart';
+import 'package:facechat/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../services/personal_chat_service.dart';
 
 class AroundUserScreen extends StatefulWidget {
   const AroundUserScreen({Key? key}) : super(key: key);
@@ -38,7 +39,7 @@ class _AroundUserScreenState extends State<AroundUserScreen> {
           if (controller.user == null) return Container();
           String userId = controller.user!.id;
           return FutureBuilder(
-            future: FirebaseUserService.getAroundUser(userId),
+            future: UserService.getAroundUser(userId),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 List<User> userList = snapshot.data as List<User>;
@@ -78,7 +79,7 @@ class _AroundUserScreenState extends State<AroundUserScreen> {
                               ),
                               GestureDetector(
                                 onTap: ()async{
-                                  String? chatId = await FirebaseChatService.startPersonalChat(user1Id: userId, user2Id: partner.id);
+                                  String? chatId = await PersonalChatService().startChat(user1Id: userId, user2Id: partner.id);
                                   print('$chatId 채팅방 생성 완료');
                                 },
                                 behavior: HitTestBehavior.opaque,

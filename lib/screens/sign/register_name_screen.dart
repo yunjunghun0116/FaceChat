@@ -1,10 +1,9 @@
-import 'package:facechat/services/firebase_upload_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../../constants/constants_colors.dart';
 import '../../constants/constants_url.dart';
+import '../../services/upload_service.dart';
 import '../../widgets/custom_bottom_bar.dart';
 
 class RegisterNameScreen extends StatefulWidget {
@@ -37,7 +36,7 @@ class _RegisterNameScreenState extends State<RegisterNameScreen> {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
     if (image == null) return;
     String? imageUrl =
-        await FirebaseUploadService.uploadProfileImage(image: image);
+        await UploadService.uploadProfileImage(image: image);
     if (imageUrl == null) return;
     setState(() => _profileImage = imageUrl);
   }

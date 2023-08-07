@@ -3,8 +3,9 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 
 class HttpService {
-  static final HttpService _instance = HttpService();
+  static final HttpService _instance = HttpService._internal();
   factory HttpService() => _instance;
+  HttpService._internal();
 
   static Future<void> sendEmail({
     required String email,

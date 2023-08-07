@@ -1,9 +1,10 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class FirebaseDataService {
-  static final FirebaseDataService _instance = FirebaseDataService();
-  factory FirebaseDataService() => _instance;
+class DataService {
+  static final DataService _instance = DataService._internal();
+  factory DataService() => _instance;
+  DataService._internal();
 
   static const String collection = 'data';
 

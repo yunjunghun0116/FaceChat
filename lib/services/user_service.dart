@@ -1,12 +1,14 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:facechat/models/user/user.dart';
-import 'package:facechat/services/firebase_data_service.dart';
-import 'package:facechat/services/firebase_sign_up_information_service.dart';
+import 'package:facechat/services/sign_up_information_service.dart';
 
-class FirebaseUserService {
-  static final FirebaseUserService _instance = FirebaseUserService();
-  factory FirebaseUserService() => _instance;
+import 'data_service.dart';
+
+class UserService {
+  static final UserService _instance = UserService._internal();
+  factory UserService() => _instance;
+  UserService._internal();
 
   static const String collection = 'user';
 
@@ -15,7 +17,7 @@ class FirebaseUserService {
     required Map<String, dynamic> userSignUpInformation,
   }) async {
     try {
-      String? userId = await FirebaseDataService.getId(name: collection);
+      String? userId = await DataService.getId(name: collection);
       if (userId == null) return false;
       DateTime signUpDate = DateTime.now();
       Map<String, dynamic> user = {
@@ -29,7 +31,7 @@ class FirebaseUserService {
         ...userSignUpInformation,
       };
 
-      await FirebaseSignUpInformationService.setSignUpInformation(
+      await SignUpInformationService.setSignUpInformation(
           userId: userId, signUpInformation: signUpInformation);
 
       await FirebaseFirestore.instance

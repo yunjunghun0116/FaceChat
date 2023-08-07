@@ -1,10 +1,11 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class FirebaseSignUpInformationService {
-  static final FirebaseSignUpInformationService _instance =
-      FirebaseSignUpInformationService();
-  factory FirebaseSignUpInformationService() => _instance;
+class SignUpInformationService {
+  static final SignUpInformationService _instance =
+      SignUpInformationService._internal();
+  factory SignUpInformationService() => _instance;
+  SignUpInformationService._internal();
 
   static const String collection = 'signUpInformation';
 

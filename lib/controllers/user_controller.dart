@@ -1,7 +1,7 @@
 import 'dart:developer';
+import 'package:facechat/services/user_service.dart';
 import 'package:flutter/material.dart';
 import '../models/user/user.dart';
-import '../services/firebase_user_service.dart';
 
 class UserController extends ChangeNotifier {
   User? user;
@@ -18,7 +18,7 @@ class UserController extends ChangeNotifier {
   Future<void> refreshUser() async {
     try {
       if (user == null) return;
-      User? newUser = await FirebaseUserService.getUser(userId: user!.id);
+      User? newUser = await UserService.getUser(userId: user!.id);
       if (newUser == null) return;
       user = newUser;
       notifyListeners();

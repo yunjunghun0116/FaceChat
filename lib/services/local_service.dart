@@ -2,8 +2,9 @@ import 'dart:developer';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalService {
-  static final LocalService _instance = LocalService();
+  static final LocalService _instance = LocalService._internal();
   factory LocalService() => _instance;
+  LocalService._internal();
 
   static SharedPreferences? _sharedPreferences;
 

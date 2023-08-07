@@ -1,12 +1,11 @@
 import 'package:facechat/screens/sign/register_email_screen.dart';
 import 'package:facechat/screens/sign/register_name_screen.dart';
 import 'package:facechat/screens/sign/register_password_screen.dart';
-import 'package:facechat/services/firebase_user_service.dart';
 import 'package:facechat/utils/local_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 import '../../constants/constants_colors.dart';
+import '../../services/user_service.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -64,7 +63,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               'email': _userEmail,
               'password': _userPassword,
             };
-            bool registerSuccess = await FirebaseUserService.register(
+            bool registerSuccess = await UserService.register(
                 userData: userData,
                 userSignUpInformation: userSignUpInformation);
             if (!mounted) return;

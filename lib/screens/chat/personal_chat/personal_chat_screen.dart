@@ -2,8 +2,8 @@ import 'package:facechat/constants/constants_colors.dart';
 import 'package:facechat/controllers/user_controller.dart';
 import 'package:facechat/models/personal_chat/personal_chat.dart';
 import 'package:facechat/screens/chat/personal_chat/personal_chat_detail_screen.dart';
-import 'package:facechat/services/firebase_chat_service.dart';
-import 'package:facechat/services/firebase_user_service.dart';
+import 'package:facechat/services/personal_chat_service.dart';
+import 'package:facechat/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,8 +17,9 @@ class PersonalChatScreen extends StatelessWidget {
     return Consumer<UserController>(builder: (context, controller, child) {
       if (controller.user == null) return Container();
       String userId = controller.user!.id;
+
       return FutureBuilder(
-        future: FirebaseChatService.getUserPersonalChat(userId: userId),
+        future: PersonalChatService().getUserChat(userId: userId),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             List<PersonalChat> chatList = snapshot.data as List<PersonalChat>;
@@ -41,8 +42,7 @@ class PersonalChatScreen extends StatelessWidget {
                               .where((element) => element != userId)
                               .first;
                           return FutureBuilder(
-                            future: FirebaseUserService.getUser(
-                                userId: partnerUserId),
+                            future: UserService.getUser(userId: partnerUserId),
                             builder: (context, snapshot) {
                               if (snapshot.hasData) {
                                 User? partnerUser = snapshot.data;
