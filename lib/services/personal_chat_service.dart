@@ -91,7 +91,7 @@ class PersonalChatService implements ChatService<PersonalChat> {
 
   @override
   Stream<QuerySnapshot<Map<String,dynamic>>> getChat({required String chatId}) {
-    return FirebaseFirestore.instance.collection(collection).doc(chatId).collection('chat').snapshots();
+    return FirebaseFirestore.instance.collection(collection).doc(chatId).collection('chat').orderBy('timeStamp').snapshots();
   }
 
   @override
@@ -124,7 +124,24 @@ class PersonalChatService implements ChatService<PersonalChat> {
       {required String chatId,
       required String userId,
       required List<String> images}) {
-    // TODO: implement sendImage
+    try {
+      DateTime nowDate = DateTime.now();
+      Chat textChat = Chat(
+        senderId: userId,
+        message: images,
+        messageType: MessageType.image.name,
+        timeStamp: nowDate.toString(),
+      );
+
+      FirebaseFirestore.instance
+          .collection(collection)
+          .doc(chatId)
+          .collection('chat')
+          .add(textChat.toJson());
+
+    } catch (e) {
+      log('PersonalChatService - sendImage Failed : $e');
+    }
   }
 
 

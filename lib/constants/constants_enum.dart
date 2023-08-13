@@ -12,5 +12,5 @@ extension MessageTypeExtenstion on MessageType {
   };
 
   String get name => names[this];
-  MessageType getType(String text) => types[text];
+  static MessageType getType(String text) => types[text];
 }

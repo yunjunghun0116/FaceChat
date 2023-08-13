@@ -1,6 +1,8 @@
 import 'package:facechat/services/personal_chat_service.dart';
+import 'package:facechat/services/upload_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../constants/constants_colors.dart';
 
@@ -18,6 +20,8 @@ class CustomInputContainer extends StatefulWidget {
 }
 
 class _CustomInputContainerState extends State<CustomInputContainer> {
+  final ImagePicker _picker = ImagePicker();
+
   final TextEditingController _textEditingController = TextEditingController();
 
   void sendText() {
@@ -26,6 +30,15 @@ class _CustomInputContainerState extends State<CustomInputContainer> {
     if (text.isEmpty) return;
     PersonalChatService()
         .sendText(chatId: widget.chatId, userId: widget.userId, text: text);
+  }
+
+  void sendImage() async {
+    List<XFile> imageList = await _picker.pickMultiImage();
+    if (imageList.isEmpty) return;
+    List<String> imageUrlList =
+        await UploadService.uploadImageList(imageList: imageList);
+    PersonalChatService().sendImage(
+        chatId: widget.chatId, userId: widget.userId, images: imageUrlList);
   }
 
   @override
@@ -68,8 +81,12 @@ class _CustomInputContainerState extends State<CustomInputContainer> {
                 ),
               ),
               const SizedBox(width: 16),
-              SvgPicture.asset(
-                'assets/icons/svg/camera_28px.svg',
+              GestureDetector(
+                onTap: () => sendImage(),
+                behavior: HitTestBehavior.opaque,
+                child: SvgPicture.asset(
+                  'assets/icons/svg/camera_28px.svg',
+                ),
               ),
               const SizedBox(width: 16),
               GestureDetector(

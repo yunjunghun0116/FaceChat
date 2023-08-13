@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:facechat/constants/constants_colors.dart';
+import 'package:facechat/constants/constants_enum.dart';
 import 'package:facechat/controllers/user_controller.dart';
 import 'package:facechat/models/chat/chat.dart';
 import 'package:facechat/models/personal_chat/personal_chat.dart';
@@ -7,7 +8,11 @@ import 'package:facechat/services/personal_chat_service.dart';
 import 'package:facechat/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'components/custom_input_container.dart';
+import '../components/custom_input_container.dart';
+import '../components/partner_chat_bubble.dart';
+import '../components/partner_image_bubble.dart';
+import '../components/user_chat_bubble.dart';
+import '../components/user_image_bubble.dart';
 
 class PersonalChatDetailScreen extends StatelessWidget {
   final String personalChatId;
@@ -72,15 +77,52 @@ class PersonalChatDetailScreen extends StatelessWidget {
                                 QuerySnapshot<Map<String, dynamic>>
                                     chatSnapshot = snapshot.data
                                         as QuerySnapshot<Map<String, dynamic>>;
+                                String? lastChatDate;
+                                String? lastSenderId;
                                 return ListView(
+                                  padding: const EdgeInsets.only(bottom: 20),
                                   children: chatSnapshot.docs
                                       .map((queryDocumentSnapshot) {
                                     Chat chat = Chat.fromJson(
                                         queryDocumentSnapshot.data());
-                                    return Container(
-                                      width: double.infinity,
-                                      height: 50,
-                                      color: kFontGray200Color,
+
+                                    String? tempLastSenderId = lastSenderId;
+                                    String? tempLastChatDate = lastChatDate;
+
+                                    lastChatDate = chat.timeStamp;
+                                    lastSenderId = chat.senderId;
+                                    MessageType messageType =
+                                        MessageTypeExtenstion.getType(
+                                            chat.messageType);
+
+                                    if (chat.senderId == userId &&
+                                        messageType == MessageType.text) {
+                                      return UserChatBubble(
+                                        chat: chat,
+                                        lastSenderId: tempLastSenderId,
+                                        lastChatDate: tempLastChatDate,
+                                      );
+                                    }
+                                    if (chat.senderId != userId &&
+                                        messageType == MessageType.text) {
+                                      return PartnerChatBubble(
+                                        chat: chat,
+                                        lastSenderId: tempLastSenderId,
+                                        lastChatDate: tempLastChatDate,
+                                      );
+                                    }
+                                    if (chat.senderId == userId &&
+                                        messageType == MessageType.image) {
+                                      return UserImageBubble(
+                                        chat: chat,
+                                        lastSenderId: tempLastSenderId,
+                                        lastChatDate: tempLastChatDate,
+                                      );
+                                    }
+                                    return PartnerImageBubble(
+                                      chat: chat,
+                                      lastSenderId: tempLastSenderId,
+                                      lastChatDate: tempLastChatDate,
                                     );
                                   }).toList(),
                                 );

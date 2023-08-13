@@ -17,8 +17,28 @@ class UploadService {
           await FirebaseStorage.instance.ref(imageRef).putFile(file);
       return await task.ref.getDownloadURL();
     } catch (e) {
-      log('FirebaseUploadService - uploadProfileImage Failed : $e');
+      log('UploadService - uploadProfileImage Failed : $e');
       return null;
+    }
+  }
+
+  static Future<List<String>> uploadImageList({required List<XFile> imageList}) async {
+    try {
+      List<String> imageUrlList = [];
+      DateTime nowDate = DateTime.now();
+      for(int i = 0; i < imageList.length; i++){
+        String imageRef = '/image/${nowDate.microsecondsSinceEpoch}/$i';
+        File file = File(imageList[i].path);
+        TaskSnapshot task =
+        await FirebaseStorage.instance.ref(imageRef).putFile(file);
+        String imageUrl = await task.ref.getDownloadURL();
+        imageUrlList.add(imageUrl);
+      }
+
+      return imageUrlList;
+    } catch (e) {
+      log('UploadService - uploadImageList Failed : $e');
+      return [];
     }
   }
 }
