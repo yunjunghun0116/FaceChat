@@ -1,5 +1,8 @@
 import 'package:facechat/constants/constants_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+import 'components/image_save_bottom_sheet.dart';
 
 class ShowImageScreen extends StatefulWidget {
   final List imageList;
@@ -24,10 +27,24 @@ class _ShowImageScreenState extends State<ShowImageScreen> {
         elevation: 0,
         actions: [
           GestureDetector(
-            onTap: (){},
+            onTap: () {
+              double page = _pageController.page ?? 0;
+              int currentIndex = page.toInt();
+              showModalBottomSheet(
+                context: context,
+                backgroundColor: Colors.transparent,
+                builder: (context) => ImageSaveBottomSheet(
+                  imageList: widget.imageList,
+                  currentImageIndex: currentIndex,
+                ),
+              );
+            },
             behavior: HitTestBehavior.opaque,
-            child: const Center(
-              child: Icon(Icons.more_vert),
+            child: Container(
+              alignment: Alignment.center,
+              width: 26,
+              height: 26,
+              child: SvgPicture.asset('assets/icons/svg/more_white_26px.svg'),
             ),
           ),
           const SizedBox(width: 20),
@@ -35,6 +52,7 @@ class _ShowImageScreenState extends State<ShowImageScreen> {
       ),
       backgroundColor: kBlackColor,
       body: PageView(
+        controller: _pageController,
         children: widget.imageList.map((image) {
           return Column(
             children: [

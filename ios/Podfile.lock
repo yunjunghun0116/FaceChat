@@ -628,6 +628,40 @@ PODS:
     - abseil/base/base_internal
     - abseil/base/config
     - abseil/meta/type_traits
+  - agora_rtc_engine (6.2.2):
+    - AgoraIrisRTC_iOS (= 4.2.2-build.1)
+    - AgoraRtcEngine_iOS (= 4.2.2)
+    - Flutter
+  - AgoraIrisRTC_iOS (4.2.2-build.1)
+  - AgoraRtcEngine_iOS (4.2.2):
+    - AgoraRtcEngine_iOS/AIAEC (= 4.2.2)
+    - AgoraRtcEngine_iOS/AINS (= 4.2.2)
+    - AgoraRtcEngine_iOS/AudioBeauty (= 4.2.2)
+    - AgoraRtcEngine_iOS/ClearVision (= 4.2.2)
+    - AgoraRtcEngine_iOS/ContentInspect (= 4.2.2)
+    - AgoraRtcEngine_iOS/DRM (= 4.2.2)
+    - AgoraRtcEngine_iOS/FaceDetection (= 4.2.2)
+    - AgoraRtcEngine_iOS/ReplayKit (= 4.2.2)
+    - AgoraRtcEngine_iOS/RtcBasic (= 4.2.2)
+    - AgoraRtcEngine_iOS/SpatialAudio (= 4.2.2)
+    - AgoraRtcEngine_iOS/VideoCodecDec (= 4.2.2)
+    - AgoraRtcEngine_iOS/VideoCodecEnc (= 4.2.2)
+    - AgoraRtcEngine_iOS/VirtualBackground (= 4.2.2)
+    - AgoraRtcEngine_iOS/VQA (= 4.2.2)
+  - AgoraRtcEngine_iOS/AIAEC (4.2.2)
+  - AgoraRtcEngine_iOS/AINS (4.2.2)
+  - AgoraRtcEngine_iOS/AudioBeauty (4.2.2)
+  - AgoraRtcEngine_iOS/ClearVision (4.2.2)
+  - AgoraRtcEngine_iOS/ContentInspect (4.2.2)
+  - AgoraRtcEngine_iOS/DRM (4.2.2)
+  - AgoraRtcEngine_iOS/FaceDetection (4.2.2)
+  - AgoraRtcEngine_iOS/ReplayKit (4.2.2)
+  - AgoraRtcEngine_iOS/RtcBasic (4.2.2)
+  - AgoraRtcEngine_iOS/SpatialAudio (4.2.2)
+  - AgoraRtcEngine_iOS/VideoCodecDec (4.2.2)
+  - AgoraRtcEngine_iOS/VideoCodecEnc (4.2.2)
+  - AgoraRtcEngine_iOS/VirtualBackground (4.2.2)
+  - AgoraRtcEngine_iOS/VQA (4.2.2)
   - AppAuth (1.6.2):
     - AppAuth/Core (= 1.6.2)
     - AppAuth/ExternalUserAgent (= 1.6.2)
@@ -770,7 +804,11 @@ PODS:
     - AppAuth/Core (~> 1.6)
     - GTMSessionFetcher/Core (< 3.0, >= 1.5)
   - GTMSessionFetcher/Core (2.3.0)
+  - image_gallery_saver (2.0.2):
+    - Flutter
   - image_picker_ios (0.0.1):
+    - Flutter
+  - iris_method_channel (0.0.1):
     - Flutter
   - kakao_flutter_sdk_common (1.4.3):
     - Flutter
@@ -781,6 +819,8 @@ PODS:
   - nanopb/decode (2.30909.0)
   - nanopb/encode (2.30909.0)
   - naveridlogin-sdk-ios (4.1.6)
+  - permission_handler_apple (9.1.1):
+    - Flutter
   - PromisesObjC (2.2.0)
   - shared_preferences_foundation (0.0.1):
     - Flutter
@@ -791,14 +831,18 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
+  - agora_rtc_engine (from `.symlinks/plugins/agora_rtc_engine/ios`)
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_storage (from `.symlinks/plugins/firebase_storage/ios`)
   - Flutter (from `Flutter`)
   - flutter_naver_login (from `.symlinks/plugins/flutter_naver_login/ios`)
   - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/ios`)
+  - image_gallery_saver (from `.symlinks/plugins/image_gallery_saver/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
+  - iris_method_channel (from `.symlinks/plugins/iris_method_channel/ios`)
   - kakao_flutter_sdk_common (from `.symlinks/plugins/kakao_flutter_sdk_common/ios`)
+  - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - sign_in_with_apple (from `.symlinks/plugins/sign_in_with_apple/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
@@ -806,6 +850,8 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - abseil
+    - AgoraIrisRTC_iOS
+    - AgoraRtcEngine_iOS
     - AppAuth
     - BoringSSL-GRPC
     - Firebase
@@ -828,6 +874,8 @@ SPEC REPOS:
     - PromisesObjC
 
 EXTERNAL SOURCES:
+  agora_rtc_engine:
+    :path: ".symlinks/plugins/agora_rtc_engine/ios"
   cloud_firestore:
     :path: ".symlinks/plugins/cloud_firestore/ios"
   firebase_core:
@@ -840,10 +888,16 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_naver_login/ios"
   google_sign_in_ios:
     :path: ".symlinks/plugins/google_sign_in_ios/ios"
+  image_gallery_saver:
+    :path: ".symlinks/plugins/image_gallery_saver/ios"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
+  iris_method_channel:
+    :path: ".symlinks/plugins/iris_method_channel/ios"
   kakao_flutter_sdk_common:
     :path: ".symlinks/plugins/kakao_flutter_sdk_common/ios"
+  permission_handler_apple:
+    :path: ".symlinks/plugins/permission_handler_apple/ios"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
   sign_in_with_apple:
@@ -853,6 +907,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   abseil: 926fb7a82dc6d2b8e1f2ed7f3a718bce691d1e46
+  agora_rtc_engine: 667a7de14f35858a31b0c64cd54042a2158ef198
+  AgoraIrisRTC_iOS: 7e71322c06db6c29ceaf89a964fb8b2700a75001
+  AgoraRtcEngine_iOS: c510de329cd905daff3f01fa4c872ea6d5eaee23
   AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
   cloud_firestore: eb6bea100a5957ac15e911a317a52738813e72ef
@@ -875,16 +932,19 @@ SPEC CHECKSUMS:
   gRPC-Core: 17108291d84332196d3c8466b48f016fc17d816d
   GTMAppAuth: 0ff230db599948a9ad7470ca667337803b3fc4dd
   GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
+  image_gallery_saver: cb43cc43141711190510e92c460eb1655cd343cb
   image_picker_ios: 4a8aadfbb6dc30ad5141a2ce3832af9214a705b5
+  iris_method_channel: 0617c689164d8154c020c50f63ca79f92b8a7b9d
   kakao_flutter_sdk_common: 31d55af8ed73538126d26d42bf9e8049a2f76da4
   leveldb-library: f03246171cce0484482ec291f88b6d563699ee06
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   naveridlogin-sdk-ios: cdd34e3585a3d5aaf37c1d84c1f41faba4a25d1a
+  permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   shared_preferences_foundation: e2dae3258e06f44cc55f49d42024fd8dd03c590c
   sign_in_with_apple: f3bf75217ea4c2c8b91823f225d70230119b8440
   url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
 
-PODFILE CHECKSUM: a57f30d18f102dd3ce366b1d62a55ecbef2158e5
+PODFILE CHECKSUM: 17b0892aed31f00273acc44ca470c923c316c89d
 
 COCOAPODS: 1.12.1

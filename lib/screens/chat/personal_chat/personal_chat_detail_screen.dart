@@ -7,6 +7,7 @@ import 'package:facechat/models/personal_chat/personal_chat.dart';
 import 'package:facechat/services/personal_chat_service.dart';
 import 'package:facechat/services/user_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import '../components/custom_input_container.dart';
 import '../components/partner_chat_bubble.dart';
@@ -43,6 +44,7 @@ class PersonalChatDetailScreen extends StatelessWidget {
                       backgroundColor: kWhiteColor,
                       foregroundColor: kFontGray800Color,
                       elevation: 0,
+                      centerTitle: true,
                       title: FutureBuilder(
                         future: UserService.get(
                           fieldName: 'name',
@@ -65,6 +67,20 @@ class PersonalChatDetailScreen extends StatelessWidget {
                           return Container();
                         },
                       ),
+                      actions: [
+                        GestureDetector(
+                          onTap: (){
+                            
+                          },
+                          behavior: HitTestBehavior.opaque,
+                          child: Center(
+                            child: SvgPicture.asset(
+                              'assets/icons/svg/group_26px.svg',
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                      ],
                     ),
                     body: Column(
                       children: [
