@@ -1,9 +1,12 @@
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:facechat/constants/constants_colors.dart';
 import 'package:facechat/constants/constants_enum.dart';
 import 'package:facechat/controllers/user_controller.dart';
 import 'package:facechat/models/chat/chat.dart';
 import 'package:facechat/models/personal_chat/personal_chat.dart';
+import 'package:facechat/screens/chat/face_chat/face_chat_screen.dart';
+import 'package:facechat/services/http_service.dart';
 import 'package:facechat/services/personal_chat_service.dart';
 import 'package:facechat/services/user_service.dart';
 import 'package:flutter/material.dart';
@@ -69,9 +72,20 @@ class PersonalChatDetailScreen extends StatelessWidget {
                       ),
                       actions: [
                         GestureDetector(
-                          onTap: (){
-                            
-                          },
+                          onTap: () =>HttpService.getRTCToken(channel: personalChatId)
+                              .then((value) {
+                            if (value != null) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => FaceChatScreen(
+                                    chatId: personalChatId,
+                                    rtcToken: value,
+                                  ),
+                                ),
+                              );
+                            }
+                          }),
                           behavior: HitTestBehavior.opaque,
                           child: Center(
                             child: SvgPicture.asset(

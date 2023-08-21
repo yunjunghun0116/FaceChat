@@ -632,6 +632,11 @@ PODS:
     - AgoraIrisRTC_iOS (= 4.2.2-build.1)
     - AgoraRtcEngine_iOS (= 4.2.2)
     - Flutter
+  - agora_rtm (1.5.8):
+    - AgoraRtm_iOS (= 1.5.1)
+    - Flutter
+  - agora_uikit (0.0.1):
+    - Flutter
   - AgoraIrisRTC_iOS (4.2.2-build.1)
   - AgoraRtcEngine_iOS (4.2.2):
     - AgoraRtcEngine_iOS/AIAEC (= 4.2.2)
@@ -662,6 +667,7 @@ PODS:
   - AgoraRtcEngine_iOS/VideoCodecEnc (4.2.2)
   - AgoraRtcEngine_iOS/VirtualBackground (4.2.2)
   - AgoraRtcEngine_iOS/VQA (4.2.2)
+  - AgoraRtm_iOS (1.5.1)
   - AppAuth (1.6.2):
     - AppAuth/Core (= 1.6.2)
     - AppAuth/ExternalUserAgent (= 1.6.2)
@@ -832,6 +838,8 @@ PODS:
 
 DEPENDENCIES:
   - agora_rtc_engine (from `.symlinks/plugins/agora_rtc_engine/ios`)
+  - agora_rtm (from `.symlinks/plugins/agora_rtm/ios`)
+  - agora_uikit (from `.symlinks/plugins/agora_uikit/ios`)
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_storage (from `.symlinks/plugins/firebase_storage/ios`)
@@ -852,6 +860,7 @@ SPEC REPOS:
     - abseil
     - AgoraIrisRTC_iOS
     - AgoraRtcEngine_iOS
+    - AgoraRtm_iOS
     - AppAuth
     - BoringSSL-GRPC
     - Firebase
@@ -876,6 +885,10 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   agora_rtc_engine:
     :path: ".symlinks/plugins/agora_rtc_engine/ios"
+  agora_rtm:
+    :path: ".symlinks/plugins/agora_rtm/ios"
+  agora_uikit:
+    :path: ".symlinks/plugins/agora_uikit/ios"
   cloud_firestore:
     :path: ".symlinks/plugins/cloud_firestore/ios"
   firebase_core:
@@ -908,8 +921,11 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   abseil: 926fb7a82dc6d2b8e1f2ed7f3a718bce691d1e46
   agora_rtc_engine: 667a7de14f35858a31b0c64cd54042a2158ef198
+  agora_rtm: 49a7d867ad91dfe587a3da4636273b80df0fe00d
+  agora_uikit: ca47b21e2af19474ddd8ec153670c2dc8cf3a9e8
   AgoraIrisRTC_iOS: 7e71322c06db6c29ceaf89a964fb8b2700a75001
   AgoraRtcEngine_iOS: c510de329cd905daff3f01fa4c872ea6d5eaee23
+  AgoraRtm_iOS: 595a9fa33a409831e6183396ea8f8bc563918403
   AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
   cloud_firestore: eb6bea100a5957ac15e911a317a52738813e72ef

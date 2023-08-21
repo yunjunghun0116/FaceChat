@@ -109,6 +109,10 @@ class _LoginScreenState extends State<LoginScreen> {
           await SignUpInformationService.findSocialSignInInformation(
               social: social, value: value);
       if (userId != null) {
+        print(userId);
+        if (_autoLogin) {
+          await LocalService.saveUserId(userId);
+        }
         goMainScreen(userId);
         return;
       }
@@ -154,6 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: kWhiteColor,
       body: Column(
         children: [

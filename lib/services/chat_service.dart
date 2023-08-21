@@ -5,6 +5,7 @@ abstract class ChatService<T> {
   Future<List<T>> getUserChat({required String userId});
   Future<T?> getChatRoom({required String chatId});
   Stream<QuerySnapshot<Map<String,dynamic>>> getChat({required String chatId});
+
   void sendText(
       {required String chatId, required String userId, required String text});
   void sendImage(

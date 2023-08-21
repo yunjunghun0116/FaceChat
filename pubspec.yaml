@@ -45,6 +45,7 @@ dependencies:
   sign_in_with_apple: ^5.0.0
   # 화상채팅 라이브러리
   agora_rtc_engine: ^6.2.2
+  agora_uikit: ^1.3.6
   # 권한 설정 라이브러리
   permission_handler: ^10.4.3
 

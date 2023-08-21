@@ -25,6 +25,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.2.2"
+  agora_rtm:
+    dependency: transitive
+    description:
+      name: agora_rtm
+      sha256: f53057125845494048e19ee6b8826fcee88937512d4c206d47a74345914e9a04
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.5.8"
+  agora_uikit:
+    dependency: "direct main"
+    description:
+      name: agora_uikit
+      sha256: "0aa9569934d2f96426010332006870b0393efb1a41e389c37b8b3cf8d2800040"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.3.6"
   analyzer:
     dependency: transitive
     description:
@@ -652,10 +668,10 @@ packages:
     dependency: transitive
     description:
       name: lints
-      sha256: "0a217c6c989d21039f1498c3ed9f3ed71b354e69873f13a8dfc3c9fe76f1b452"
+      sha256: "5e4a9cd06d447758280a8ac2405101e0e2094d2a1dbdd3756aec3fe7775ba593"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.1"
+    version: "2.0.1"
   logging:
     dependency: transitive
     description:
